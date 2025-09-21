@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 
+    [[${変数名}]] - th:textと同じ。
+  -->
+
+  <div class="wrap">
+    <header>
+      <div class="header_top">
+        <h1>TRAVEL WORLD</h1>
+        <nav>
+          <ul>
+            <li><a href="#">TOP</a></li>
+            <li><a href="#">新着情報</a></li>
+            <li><a href="#">オススメ旅行プラン</a></li>
+            <li><a href="#">会社概要</a></li>
+            <li><a href="#">お問い合わせ</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div>
+        <img src="image/top.jpg" alt="羊の写真">
+      </div>
+    </header>
+
+    <main>
+      <article>
+        <h2>新着情報</h2>
+        <dl th:each="news:${newsList}">
+          <dt>[[${news.newsDate}]]</dt>
+          <dd>[[${news.newsText}]]</dd>
+        </dl>
+      </article>
+      <section>
+        <h2>会社概要</h2>
+        <table>
+          <tr>
+            <th>会社名</th>
+            <td>トラベルワールド株式会社</td>
+          </tr>
+          <tr>
+            <th>住所</th>
+            <td>〒999-999 東京と原町田 1-2</td>
+          </tr>
+          <tr>
+            <th>電話番号</th>
+            <td>03-9999-9999</td>
+          </tr>
+          <tr>
+            <th>設立</th>
+            <td>平成10年 1月 10日</td>
+          </tr>
+        </table>
+      </section>
+      <section>
+        <h2>お問い合わせ</h2>
+        <form>
+          <table>
+            <tr>
+              <th>名前</th>
+              <td><input type="text" name="name" size="30" maxlength="20"></td>
+            </tr>
+            <tr>
+              <th>お問い合わせ</th>
+              <td>
+                <input type="radio" name="quantity" value="1">サイトについて
+                <input type="radio" name="quantity" value="2">サービス内容について
+                <input type="radio" name="quantity" value="3">その他
+              </td>
+            </tr>
+            <tr>
+              <th>返答方法</th>
+              <td>
+                <input type="checkbox" name="reply" value="mail">メール
+                <input type="checkbox" name="reply" value="phone">電話
+                <input type="checkbox" name="reply" value="letter">郵送
+              </td>
+            </tr>
+            <tr>
+              <th>お問い合わせ内容</th>
+              <td><textarea rows="4" cols="40"></textarea></td>
+            </tr>
+          </table>
+          <p class="btn">
+            <input type="submit" value="送信">
+            <input type="reset" value="リセット">
+          </p>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <p class="copy"><small>Copyright &copy;2023 TravelWorld All Rights Reserved</small></p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+# 各項目の説明
+# - build: DockerイメージをビルドするためのDockerfileがあるディレクトリ
+# - environment: 環境変数の設定
+#   - appの方はDBとの接続用の設定
+#   - dbの方はDBの初期設定
+# - networks: コンテナ間のネットワーク このネットワークはDockerの内部ネットワーク（Linux Bridge）を通じて繋がっており、ホストを経由しているわけではない。
+# - volumes: データベースのデータ永続化用
+
+# Dockerのボリュームについて
+# - 名前付きボリューム: Dockerが管理する名前付きストレージ領域。コンテナが終了したり、イメージファイルが削除されても残る。消すには自分でコマンドを実行する必要がある。
+# - バインドマウント: ホストのディレクトリをコンテナにマウントする。
+# - tmpfsマウント: ホストのメモリ上に作られる一時ファイルシステム。再起動で消える。
+
+services:
+  app:
+    build: ./app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/TRAVELWORLD
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    networks:
+      - appnetwork
+  
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: TRAVELWORLD
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgres/data
+    networks:
+      - appnetwork
+
+volumes:
+  pgdata:
+
+networks:
+  appnetwork:
